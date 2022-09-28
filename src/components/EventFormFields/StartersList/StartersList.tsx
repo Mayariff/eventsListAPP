@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import TextField from "../../formFields/TextField/TextField";
 import {startersType} from "../../../API/types";
-import {log} from "util";
 
 type StartersListType = {
     deleteField: (id: number) => void
@@ -15,10 +14,11 @@ export const StartersList = ({deleteField, changeField, value, isDepartment}: St
     const [position, setPosition] = useState<string>(value.person?.position ? value.person?.position : '')
     const [department, setDepartment] = useState<string>(value.department ? value.department : '')
 
-   //const onChangeName=(value:string)=>setName(value)
+    const onChangeName = (value: string) => setName(value)
+    const onPosition = (value: string) => setPosition(value)
+    const onChangeDepartment = (value: string) => setDepartment(value)
 
     const closeField = () => deleteField(value.id)
-
 
 
     const onMouseLeaveHandler = () => {
@@ -33,10 +33,10 @@ export const StartersList = ({deleteField, changeField, value, isDepartment}: St
     return (
         <div onMouseLeave={onMouseLeaveHandler}>
             {isDepartment ?
-                <TextField onChangeHandler={setDepartment} labelName={'Отдел'} labelFor={'department'}
+                <TextField onChangeHandler={onChangeDepartment} labelName={'Отдел'} labelFor={'department'}
                            value={department}/> : <>
-                    <TextField onChangeHandler={setName} labelName={'Имя'} labelFor={'name_starter'} value={name}/>
-                    <TextField onChangeHandler={setPosition} labelName={'Должность'} labelFor={'position_starter'}
+                    <TextField onChangeHandler={onChangeName} labelName={'Имя'} labelFor={'name_starter'} value={name}/>
+                    <TextField onChangeHandler={onPosition} labelName={'Должность'} labelFor={'position_starter'}
                                value={position}/>
                 </>}
             <input type={'button'} value={'-'} onClick={closeField}/>

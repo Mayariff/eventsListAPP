@@ -2,7 +2,16 @@ import React, {ChangeEventHandler} from 'react';
 import {textFieldType} from "../type";
 
 
-const TextField = ({onChangeHandler, labelName, labelFor, value, maxLength, type, errorHandler, ...props}: textFieldType) => {
+const TextField = ({
+                       onChangeHandler,
+                       labelName,
+                       labelFor,
+                       value,
+                       maxLength,
+                       type,
+                       errorHandler,
+                       ...props
+                   }: textFieldType) => {
 
     const changeInputValue: ChangeEventHandler<HTMLInputElement> = (e) => {
         const currValue = e.currentTarget.value
@@ -18,7 +27,9 @@ const TextField = ({onChangeHandler, labelName, labelFor, value, maxLength, type
             errorHandler && errorHandler('поле обязательно')
         }
     }
-    const onFocusHandler = () => {errorHandler && errorHandler(null)}
+    const onFocusHandler = () => {
+        errorHandler && errorHandler(null)
+    }
 
     return (<>
             <label htmlFor={labelFor}>{labelName} :</label>

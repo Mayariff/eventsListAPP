@@ -13,6 +13,6 @@ const eventActions = {
 
 export {
     eventSelectors,
-    eventReducer ,
+    eventReducer,
     eventActions,
 }

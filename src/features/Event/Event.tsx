@@ -20,8 +20,8 @@ const Event = React.memo(() => {
     const type = useContext(DataContex).selectEventType.filter(s => s.value === event.type)[0]
     const status = useContext(DataContex).selectEventStatus.filter(s => s.value === event.status)[0]
 
-    const typeEvent = type ? type?.title: event.type
-    const statusEvent= status? status.title: event.status
+    const typeEvent = type ? type?.title : event.type
+    const statusEvent = status ? status.title : event.status
 
     //API модального окна
     const [updateEventModal, setUpdateEventModal] = useState(false);
@@ -45,7 +45,6 @@ const Event = React.memo(() => {
     }, [updateEventModal])
 
 
-
     if (!Number(id)) return <ErrorPage/>
 
     return (
@@ -58,13 +57,14 @@ const Event = React.memo(() => {
             <h3>{typeEvent}</h3>
             <div>
                 <div>Статус: {statusEvent} </div>
-                Период проведения: {event.startDate} {!!event.eventName && <span> - {event.endDate && reverseDate(event.endDate)} </span>}
-                {event.description&& <div>Описание : {event.description} </div>}
+                Период проведения: {event.startDate} {!!event.eventName &&
+                <span> - {event.endDate && reverseDate(event.endDate)} </span>}
+                {event.description && <div>Описание : {event.description} </div>}
                 {event.startersList &&
                     <div>Список участников: <ol>
-                {event.startersList.map(s => <Starter key={s.id} data={s}/>)}
-            </ol>
-                </div>
+                        {event.startersList.map(s => <Starter key={s.id} data={s}/>)}
+                    </ol>
+                    </div>
                 }
             </div>
             <button onClick={onClickHandler}>back</button>

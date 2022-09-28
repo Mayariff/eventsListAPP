@@ -20,13 +20,14 @@ const CreateEvent = ({showAdd}: modalContentType<undefined>) => {
         dispatch(eventsListActions.fetchEvents())
     }
 
-    const [fieldError, setFieldError]=useState<string|null>(null)
+    const [fieldError, setFieldError] = useState<string | null>(null)
 
     const disableBtnCondition = !!fieldError || (!eventValue?.eventName?.length || !eventValue?.startDate?.length)
 
     return (
         <form>
-            <EventFields event={eventValue} changeValue={setEventValue} error={fieldError} errorHandler={setFieldError}/>
+            <EventFields event={eventValue} changeValue={setEventValue} error={fieldError}
+                         errorHandler={setFieldError}/>
             <button type={'submit'} onClick={createEvent} disabled={disableBtnCondition}>создать</button>
         </form>
     );

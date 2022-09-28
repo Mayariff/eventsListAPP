@@ -14,7 +14,7 @@ const eventsListActions = {
 
 export {
     eventListsSelectors,
-    eventsListReducer ,
+    eventsListReducer,
     eventsListActions,
     EventList
 }

@@ -17,8 +17,8 @@ function App() {
     const [errorModal, setErrorModal] = useState(true);
 
     useEffect(() => {
-     //localStorage.clear()
-       dispatch(appActions.initializeApp())
+        //localStorage.clear()
+        dispatch(appActions.initializeApp())
     }, [isInitialized])
 
 

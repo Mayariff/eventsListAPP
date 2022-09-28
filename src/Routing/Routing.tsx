@@ -9,11 +9,11 @@ import App from "../App/App";
 const Routing = () => {
     return (
         <Routes>
-            <Route  path="/" element={ <App />} >
-             <Route  path={"/"} element={<EventList />} />
-                <Route  path={"/:id"} element={<Event />} />
-                <Route path="*" element={<ErrorPage />} />
-           </Route>
+            <Route path="/" element={<App/>}>
+                <Route path={"/"} element={<EventList/>}/>
+                <Route path={"/:id"} element={<Event/>}/>
+                <Route path="*" element={<ErrorPage/>}/>
+            </Route>
         </Routes>
     );
 };

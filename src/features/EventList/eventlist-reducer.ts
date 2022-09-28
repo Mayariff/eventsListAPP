@@ -6,7 +6,6 @@ import {handleAError} from "../../utils/error-utils";
 import {commonActions} from "../common_actions/app-actions";
 
 
-
 const fetchEvents = createAsyncThunk<{ events: Array<itemType> }, undefined, ThunkError>('events-list/fetchEvents', (params, thunkAPI) => {
     thunkAPI.dispatch(commonActions.setAppStatus({status: 'loading'}))
     try {
@@ -18,12 +17,12 @@ const fetchEvents = createAsyncThunk<{ events: Array<itemType> }, undefined, Thu
     }
 })
 
-const filterEvents = createAsyncThunk<{ events: Array<itemType> , params: paramType}, paramType, ThunkError>('events-list/filterEvents', (params, thunkAPI) => {
+const filterEvents = createAsyncThunk<{ events: Array<itemType>, params: paramType }, paramType, ThunkError>('events-list/filterEvents', (params, thunkAPI) => {
     thunkAPI.dispatch(commonActions.setAppStatus({status: 'loading'}))
     try {
         const res = ArrangementList.getAll()
         thunkAPI.dispatch(commonActions.setAppStatus({status: 'succeeded'}))
-        return {events:res, params}
+        return {events: res, params}
     } catch (error) {
         return handleAError({message: `Events doesn't fetch`}, thunkAPI)
     }
@@ -52,13 +51,13 @@ export const slice = createSlice({
     extraReducers: builder => {
         builder
             .addCase(fetchEvents.fulfilled, (state, action) => {
-                return action.payload.events.sort((a,b)=> a.startDate>b.startDate? 1: -1)
+                return action.payload.events.sort((a, b) => a.startDate > b.startDate ? 1 : -1)
             })
             .addCase(filterEvents.fulfilled, (state, action) => {
-            const {type, dateFrom, dateTo}=action.payload.params
-               return  action.payload.events.filter(ev => type === 'all' ? ev : ev.type === type)
-                .filter(ev => !dateFrom ? ev : ev.startDate >= dateFrom)
-                .filter(ev => !dateTo ? ev : ev.endDate && ev.endDate <= dateTo)
+                const {type, dateFrom, dateTo} = action.payload.params
+                return action.payload.events.filter(ev => type === 'all' ? ev : ev.type === type)
+                    .filter(ev => !dateFrom ? ev : ev.startDate >= dateFrom)
+                    .filter(ev => !dateTo ? ev : ev.endDate && ev.endDate <= dateTo)
             })
             .addCase(removeEvent.fulfilled, (state, action) => {
                 const index = state.findIndex(t => t.id === action.payload.id)

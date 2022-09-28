@@ -1,10 +1,10 @@
-export type modalType<T>={
+export type modalType<T> = {
     isOpen: boolean,
     changeIsOpen: (isOpen: boolean) => void
     payload: T
 }
 
-export type modalContentType<D> ={
+export type modalContentType<D> = {
     showAdd: (isOpen: boolean) => void
     payload: D
 }

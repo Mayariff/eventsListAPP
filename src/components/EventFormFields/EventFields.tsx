@@ -12,8 +12,8 @@ export type eventFieldType = itemType | Omit<itemType, "id">
 type propsType = {
     event: eventFieldType,
     changeValue: (value: eventFieldType) => void
-    error?: string|null
-    errorHandler?:(error: string|null)=>void
+    error?: string | null
+    errorHandler?: (error: string | null) => void
 }
 
 
@@ -105,7 +105,7 @@ const EventFields = ({event, changeValue, error, errorHandler}: propsType) => {
                     onChangeHandler={selectStatusHandler}
                     labelName={'Статус события'}
                     labelFor={'event_status'}
-                    value={status} />
+                    value={status}/>
             <label>Список участников: <input type={'button'} value={'+'} onClick={addField}/></label>
             <label><input type={'checkbox'} checked={isPerson} onChange={changeDepartment}/> Сотрудники </label>
 
