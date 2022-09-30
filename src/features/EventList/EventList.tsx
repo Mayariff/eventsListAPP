@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../utils/redux-utils";
 import {selectEventsList} from "./selectors";
 import {eventsListActions} from "./index";
@@ -9,12 +9,12 @@ import {CreateEventModal} from "../../components/Modal";
 import {paramType} from "./eventlist-reducer";
 
 
-const EventList = () => {
+const EventList = React.memo(() => {
     const events = useAppSelector(selectEventsList)
     const dispatch = useAppDispatch()
-    const onClickHandler = (value: paramType) => {
+    const onClickHandler = useCallback((value: paramType) => {
         dispatch(eventsListActions.filterEvents(value))
-    }
+    }, [eventsListActions.filterEvents, dispatch])
     // btn 'create event'
     const clickBtnCreateEventHandler = () => {
         setCreateEventModal(true)
@@ -39,6 +39,6 @@ const EventList = () => {
             <CreateEventModal isOpen={createEventModal} changeIsOpen={setCreateEventModal} payload={undefined}/>
         </>
     );
-};
+});
 
 export default EventList;

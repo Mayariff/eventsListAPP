@@ -5,7 +5,7 @@ import {useAppDispatch} from "../../../utils/redux-utils";
 import {commonActions} from "../../../features/common_actions/app-actions";
 
 
-const Error = ({showAdd, payload}: modalContentType<{ error: string | null }>) => {
+const Error = React.memo(({showAdd, payload}: modalContentType<{ error: string | null }>) => {
     const dispatch = useAppDispatch()
     const closeModal = () => {
         dispatch(commonActions.setAppError({error: null}))
@@ -18,7 +18,7 @@ const Error = ({showAdd, payload}: modalContentType<{ error: string | null }>) =
             <button onClick={closeModal}> OK</button>
         </div>
     );
-};
+});
 
 const ErrorModal = ({isOpen, changeIsOpen, payload}: modalType<{ error: string | null }>) => <Modal isOpen={isOpen}
                                                                                                     changeModal={changeIsOpen}>

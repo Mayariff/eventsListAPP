@@ -1,41 +1,44 @@
-import React, {ChangeEventHandler, FocusEventHandler, useContext, useState} from 'react';
+import React, {ChangeEventHandler, MouseEventHandler, useCallback, useContext, useState} from 'react';
 import Select from "../formFields/Select/Select";
 import {selectDataType} from "../formFields/type";
 import TextField from "../formFields/TextField/TextField";
-import {StartersList} from "./StartersList/StartersList";
 import {DataContex} from "../../data/context_data";
 import {eventType, itemType, startersType, statusEventType} from "../../API/types";
 import {create_id} from "../../utils/create_id";
-
-export type eventFieldType = itemType | Omit<itemType, "id">
-
-type propsType = {
-    event: eventFieldType,
-    changeValue: (value: eventFieldType) => void
-    error?: string | null
-    errorHandler?: (error: string | null) => void
-}
+import {useAppDispatch, useAppSelector} from "../../utils/redux-utils";
+import {updateEventForm} from "./eventForm-reducer";
+import {selectStarters, StarterItem, startersActions} from "../StarterItem";
+import {EventFieldsType} from "./index";
 
 
-const EventFields = ({event, changeValue, error, errorHandler}: propsType) => {
+const EventFields = React.memo(({event, changeValue, error, errorHandler, isCreateModal}: EventFieldsType) => {
+    const dispatch = useAppDispatch()
     //Select values
     const selectTypeData = useContext(DataContex).selectEventType.filter(s => s.value !== 'all')
     const selectStatusData = useContext(DataContex).selectEventStatus
+    const Starters = useAppSelector(selectStarters)
 
     //starters logic
-    const [starters, setStarters] = useState<Array<startersType>>(event?.startersList ? event.startersList : [])
-    const isPersonCondition = starters.length > 0 && starters[0]?.hasOwnProperty('person')
+    const [starters, setStarters] = useState<Array<startersType>>(event.startersList ? event.startersList : [])
+    const isPersonCondition = starters.length > 0 && starters[0]?.hasOwnProperty('name')
     const [isPerson, setIsPerson] = useState<boolean>(isPersonCondition)
     const addField = () => {
         const obj = {id: create_id()}
         setStarters(starters => [...starters, obj])
     }
     const deleteField = (id: number) => {
-        setStarters(starters => starters.filter(s => s.id !== id))
+        const newStarters = starters.filter(s => s.id !== id)
+        dispatch(startersActions.updateStarters({starters: newStarters}))
+        setStarters(newStarters)
     }
-    const changeField = (value: startersType) => {
-        setStarters(starters.map(s => s.id === value.id ? value : s))
-    }
+
+    const changeStartersField = useCallback((value: startersType) => {
+        const newStarters = starters.map(s => s.id === value.id ? value : s)
+        dispatch(startersActions.updateStarters({starters: newStarters}))
+        setStarters(newStarters)
+    }, [starters])
+
+
     const changeDepartment: ChangeEventHandler<HTMLInputElement> = (e) => {
         setIsPerson(e.currentTarget.checked)
         setStarters([])
@@ -50,26 +53,49 @@ const EventFields = ({event, changeValue, error, errorHandler}: propsType) => {
     const [status, setStatus] = useState<statusEventType>(event?.status ? event.status : 'planned')
 
     //fields handlers
-    const onChangeInputValueFrom = (value: string) => setStartDate(value)
-    const onChangeInputValueTo = (value: string) => setEndDate(value)
-    const selectHandler = (value: string) => setType(value as eventType)
-    const onChangeNameHandler = (value: string) => setEventName(value)
-    const onChangeDescriptionHandler = (value: string) => setDescription(value)
-    const selectStatusHandler = (value: string) => setStatus(value as statusEventType)
+    const onChangeInputValueFrom = useCallback((value: string) => {
+        dispatch(updateEventForm({...event, startDate: value}))
+        setStartDate(value)
+    }, [setStartDate, updateEventForm])
+    const onChangeInputValueTo = useCallback((value: string) => {
+        dispatch(updateEventForm({...event, endDate: value}))
+        setEndDate(value)
+    }, [setEndDate, updateEventForm])
+    const selectHandler = useCallback((value: string) => {
+        dispatch(updateEventForm({...event, type: value as eventType}))
+        setType(value as eventType)
+    }, [updateEventForm, setType])
+    const onChangeNameHandler = useCallback((value: string) => {
+        dispatch(updateEventForm({...event, eventName: value.trim()}))
+        setEventName(value)
+        errorHandler && errorHandler(null)
+    }, [updateEventForm, setEventName, errorHandler])
+    const onChangeDescriptionHandler = useCallback((value: string) => {
+        dispatch(updateEventForm({...event, description: value.trim()}))
+        setDescription(value)
+    }, [setDescription, updateEventForm])
+    const selectStatusHandler = useCallback((value: string) => {
+        dispatch(updateEventForm({...event, status: value as statusEventType}))
+        setStatus(value as statusEventType)
+    }, [updateEventForm, setStatus])
 
-    const onChangeHandler: FocusEventHandler<HTMLDivElement> = (e) => {
-        const newEvent: Omit<itemType, "id"> = {
-            type, startDate, endDate, status,
-            eventName: eventName.trim(),
-            description: description.trim(),
-            startersList: starters
+    //only for create event
+    const onMouseLeaveHandler: MouseEventHandler<HTMLDivElement> = useCallback((e) => {
+        if (isCreateModal) {
+            const newEvent: Omit<itemType, "id"> = {
+                type, startDate, endDate, status,
+                eventName: eventName.trim(),
+                description: description.trim(),
+                startersList: Starters
+            }
+            dispatch(updateEventForm({...newEvent}))
+            changeValue(newEvent)
         }
-        changeValue({...event, ...newEvent})
-    }
+    }, [type, startDate, endDate, status, starters, description])
 
 
     return (
-        <div onChange={onChangeHandler}>
+        <div onMouseLeave={onMouseLeaveHandler}>
             <Select values={selectTypeData}
                     onChangeHandler={selectHandler}
                     labelName={'Тип события'}
@@ -80,12 +106,16 @@ const EventFields = ({event, changeValue, error, errorHandler}: propsType) => {
                        value={startDate}
                        onChangeHandler={onChangeInputValueFrom} type={'date'}
                        required={true}
-                       errorHandler={errorHandler}/>
+                       errorHandler={errorHandler}
+            />
 
             <TextField labelName={'Дата окончания'}
                        labelFor={'to_date'}
                        value={endDate}
-                       onChangeHandler={onChangeInputValueTo} type={'date'}/>
+                       onChangeHandler={onChangeInputValueTo}
+                       type={'date'}
+                       errorHandler={errorHandler}
+            />
             <TextField onChangeHandler={onChangeNameHandler}
                        labelName={'Название'}
                        labelFor={'name'}
@@ -109,14 +139,14 @@ const EventFields = ({event, changeValue, error, errorHandler}: propsType) => {
             <label>Список участников: <input type={'button'} value={'+'} onClick={addField}/></label>
             <label><input type={'checkbox'} checked={isPerson} onChange={changeDepartment}/> Сотрудники </label>
 
-            {starters.map(s => <StartersList key={s.id}
-                                             deleteField={deleteField}
-                                             changeField={changeField}
-                                             value={s}
-                                             isDepartment={!isPerson}
+            {starters.map((s) => <StarterItem key={s.id}
+                                              deleteStarter={deleteField}
+                                              changeStarter={changeStartersField}
+                                              isDepartment={!isPerson}
+                                              starter={s}
             />)}
         </div>
     );
-};
+});
 
 export default EventFields;

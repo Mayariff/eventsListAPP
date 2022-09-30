@@ -6,7 +6,7 @@ import {modalContentType, modalType} from "../types";
 import {Modal} from "../Modal";
 
 
-const DeleteEvent = ({showAdd, payload}: modalContentType<{ id: number }>) => {
+const DeleteEvent = React.memo(({showAdd, payload}: modalContentType<{ id: number }>) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
     const closeModal = () => {
@@ -23,7 +23,7 @@ const DeleteEvent = ({showAdd, payload}: modalContentType<{ id: number }>) => {
             <button onClick={closeModal}> Нет</button>
         </div>
     );
-};
+});
 
 const DeleteEventModal = ({isOpen, changeIsOpen, payload}: modalType<number>) => <Modal isOpen={isOpen}
                                                                                         changeModal={changeIsOpen}>

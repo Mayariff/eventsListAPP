@@ -23,13 +23,13 @@ export const data: Array<itemType> = [
         eventName: 'Команда: любить и не убить',
         description: 'Тренинг с приглашенным коучем о том, как установить продуктивные взаимоотношения в команде',
         status: 'cancelled',
-        startersList: [{id: 1, person:{name: 'Максим', position: 'teamLead'}},
-            {id: 11, person:{name: 'Егор', position: 'backEnd'}},
-            {id: 19, person:{name: 'Игорь', position: 'backEnd'}},
-            {id: 21, person:{name: 'Юля', position: 'тестировщик'}},
-            {id: 30, person:{name: 'Максим', position: 'верстальщик'}},
-            {id: 28, person:{name: 'Кристина', position: 'frontEnd'}},
-            {id: 71, person:{name: 'Олег', position: 'frontEnd'}},
+        startersList: [{id: 1, name: 'Максим', position: 'teamLead'},
+            {id: 11, name: 'Егор', position: 'backEnd'},
+            {id: 19, name: 'Игорь', position: 'backEnd'},
+            {id: 21, name: 'Юля', position: 'тестировщик'},
+            {id: 30, name: 'Максим', position: 'верстальщик'},
+            {id: 28, name: 'Кристина', position: 'frontEnd'},
+            {id: 71, name: 'Олег', position: 'frontEnd'},
         ]
     },
     {
@@ -40,10 +40,10 @@ export const data: Array<itemType> = [
         eventName: 'Апокалипсис сегодня',
         description: 'Встречи с заказчиком для проработки тз для нового направления',
         status: 'planned',
-        startersList: [{id: 1, person:{name: 'Максим', position: 'teamLead'}},
-            {id: 2, person:{name: 'Евгений', position: 'секретарь'}},
-            {id: 5, person:{name: 'Анаставия', position: 'дизайнер'}},
-            {id: 4, person:{name: 'Вадим', position: 'аналитик'}}
+        startersList: [{id: 1, name: 'Максим', position: 'teamLead'},
+            {id: 2, name: 'Евгений', position: 'секретарь'},
+            {id: 5, name: 'Анаставия', position: 'дизайнер'},
+            {id: 4, name: 'Вадим', position: 'аналитик'}
         ]
     },
     {
@@ -54,6 +54,6 @@ export const data: Array<itemType> = [
         eventName: 'Happy New Year',
         description: 'Традиционная корпоративная вечеринка на Мальдивах',
         status: 'planned',
-        startersList: [ {id: 1000, department: 'Все сотрудники'}]
+        startersList: [{id: 1000, department: 'Все сотрудники'}]
     },
 ]

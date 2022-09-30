@@ -1,32 +1,55 @@
 import {itemType} from "../../../API/types";
-import {useAppDispatch} from "../../../utils/redux-utils";
+import {useAppDispatch, useAppSelector} from "../../../utils/redux-utils";
 import React, {MouseEventHandler, useState} from "react";
-import EventFields, {eventFieldType} from "../../EventFormFields/EventFields";
 import {eventActions} from "../../../features/Event";
 import {modalContentType, modalType} from "../types";
 import {Modal} from "../Modal";
+import {selectStarters} from "../../StarterItem";
+import {EventFields, eventFieldType, selectEventFormFields} from "../../EventFormFields";
 
-const _UpdateEvent = ({showAdd, payload}: modalContentType<{ event: itemType }>) => {
-
+const _UpdateEvent = React.memo(({showAdd, payload}: modalContentType<{ event: itemType }>) => {
+    const id = payload.event.id
+    const starters = useAppSelector(selectStarters)
+    const event = useAppSelector(selectEventFormFields)
     const dispatch = useAppDispatch()
     const [eventValue, setEventValue] = useState<eventFieldType>(payload.event)
-    const updateEvent: MouseEventHandler<HTMLButtonElement> = (e) => {
-        e.preventDefault()
-        dispatch(eventActions.updateEvent({event: eventValue as itemType}))
-        showAdd(false)
-    }
     const [fieldError, setFieldError] = useState<string | null>(null)
 
-    const disableBtnCondition = !!fieldError || !eventValue?.eventName?.length || !eventValue?.startDate?.length
+
+    const updateEvent: MouseEventHandler<HTMLButtonElement> = (e) => {
+        e.preventDefault()
+
+        if (event.endDate && event.startDate > event.endDate) {
+            setFieldError('Дата начала события должна  быть раньше его конца')
+        } else if (event.eventName?.length === 0) {
+            setFieldError('заполните обязательные поля')
+        } else {
+            setFieldError(null)
+            dispatch(eventActions.updateEvent({
+                event: {
+                    ...payload.event, ...event,
+                    id,
+                    startersList: [...starters]
+                } as itemType
+            }))
+            showAdd(false)
+        }
+    }
+
+
+    const onChangeHandler = (value: eventFieldType) => {
+        setEventValue({id, ...value})
+    }
 
     return (
         <form>
-            <EventFields event={eventValue} changeValue={setEventValue} error={fieldError}
+            <EventFields event={eventValue} changeValue={onChangeHandler} error={fieldError}
                          errorHandler={setFieldError}/>
-            <button type={'submit'} onClick={updateEvent} disabled={disableBtnCondition}>Изменить</button>
+            <button type={'submit'} onClick={updateEvent} disabled={!!fieldError}>Изменить</button>
+            {fieldError && <span>{fieldError}</span>}
         </form>
     );
-};
+});
 
 const UpdateEventModal = ({isOpen, changeIsOpen, payload}: modalType<itemType>) => <Modal isOpen={isOpen}
                                                                                           changeModal={changeIsOpen}>

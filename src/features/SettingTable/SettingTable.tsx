@@ -8,14 +8,10 @@ import TextField from "../../components/formFields/TextField/TextField";
 
 
 type propsType = {
-    changeParams?: (value: paramType) => void
-    params?: paramType
-    onSubmit?: (value: paramType) => void
-    onReset?: (value: paramType) => void
     onClickHandler: (value: paramType) => void
 }
 
-const SettingTable = ({changeParams, params, onReset, onSubmit, onClickHandler}: propsType) => {
+const SettingTable = React.memo(({onClickHandler}: propsType) => {
 
     const selectData = useContext(DataContex).selectEventType
 
@@ -61,6 +57,6 @@ const SettingTable = ({changeParams, params, onReset, onSubmit, onClickHandler}:
             <button type={"reset"} onClick={onResetHandler}> X</button>
         </form>
     );
-};
+});
 
 export default SettingTable;

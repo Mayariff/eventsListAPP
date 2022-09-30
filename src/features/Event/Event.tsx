@@ -4,10 +4,11 @@ import {useAppDispatch, useAppSelector} from "../../utils/redux-utils";
 import {eventActions} from "./index";
 import {selectEvent} from "./selectors";
 import ErrorPage from "../../components/ErrorPage/ErrorPage";
-import {DeleteEventModal, UpdateEventModal} from "../../components/Modal";
+import {DeleteEventModal} from "../../components/Modal";
 import {Starter} from "../../components/Starter/Starter";
 import {reverseDate} from "../../utils/reverse_date";
 import {DataContex} from "../../data/context_data";
+import UpdateEventModal from "../../components/Modal/UpdateEventModal/UpdateEventModal";
 
 
 const Event = React.memo(() => {
@@ -26,7 +27,6 @@ const Event = React.memo(() => {
     //API модального окна
     const [updateEventModal, setUpdateEventModal] = useState(false);
     const [delEventModal, setDelEventModal] = useState(false);
-
 
     //btn 'change event'
     const onClickBtnChangeHandler = () => {
@@ -57,13 +57,15 @@ const Event = React.memo(() => {
             <h3>{typeEvent}</h3>
             <div>
                 <div>Статус: {statusEvent} </div>
-                Период проведения: {event.startDate} {!!event.eventName &&
+                Период проведения: {!!event.startDate && reverseDate(event.startDate)} {!!event.endDate &&
                 <span> - {event.endDate && reverseDate(event.endDate)} </span>}
-                {event.description && <div>Описание : {event.description} </div>}
+                {event.description &&
+                    <div>Описание : {event.description} </div>}
                 {event.startersList &&
-                    <div>Список участников: <ol>
-                        {event.startersList.map(s => <Starter key={s.id} data={s}/>)}
-                    </ol>
+                    <div>Список участников:
+                        <ol>
+                            {event.startersList.map(s => <Starter key={s.id} data={s}/>)}
+                        </ol>
                     </div>
                 }
             </div>

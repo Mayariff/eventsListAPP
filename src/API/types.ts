@@ -3,11 +3,9 @@ export type statusEventType = 'in_progress' | 'planned' | 'happened' | 'cancelle
 
 export type startersType = {
     id: number,
-    person?: {
-        name: string,
-        position: string,
-    }
-    department?: string
+   name?: string,
+   position?: string,
+   department?: string
 }
 
 export type itemType = {

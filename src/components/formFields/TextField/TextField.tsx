@@ -1,18 +1,17 @@
-import React, {ChangeEventHandler} from 'react';
+import React, {ChangeEventHandler, FocusEventHandler} from 'react';
 import {textFieldType} from "../type";
 
 
-const TextField = ({
-                       onChangeHandler,
-                       labelName,
-                       labelFor,
-                       value,
-                       maxLength,
-                       type,
-                       errorHandler,
-                       ...props
-                   }: textFieldType) => {
-
+const TextField = React.memo(({
+                                  onChangeHandler,
+                                  labelName,
+                                  labelFor,
+                                  value,
+                                  maxLength,
+                                  type,
+                                  errorHandler,
+                                  ...props
+                              }: textFieldType) => {
     const changeInputValue: ChangeEventHandler<HTMLInputElement> = (e) => {
         const currValue = e.currentTarget.value
         if (maxLength && currValue.length > maxLength) {
@@ -22,9 +21,10 @@ const TextField = ({
             onChangeHandler(currValue)
         }
     }
-    const onBlurHandler = () => {
-        if (props.required && !value) {
-            errorHandler && errorHandler('поле обязательно')
+    const onBlurHandler: FocusEventHandler<HTMLInputElement> = (e) => {
+        props.onBlur && props.onBlur(e)
+        if (props.required && (!value || value.trim().length === 0)) {
+            errorHandler && errorHandler('заполните обязательные поля')
         }
     }
     const onFocusHandler = () => {
@@ -32,16 +32,16 @@ const TextField = ({
     }
 
     return (<>
-            <label htmlFor={labelFor}>{labelName} :</label>
+            <label htmlFor={labelFor}>{props.required ? `${labelName}*` : labelName} :</label>
             <input id={labelFor}
                    type={type ? type : 'text'}
-                   value={value} onChange={changeInputValue} {...props}
+                   value={value.toString()} onChange={changeInputValue} {...props}
                    onBlur={onBlurHandler} onFocus={onFocusHandler}
 
             />
             {maxLength && <div>{value.length}/ {maxLength} </div>}
         </>
     );
-};
+});
 
 export default TextField;

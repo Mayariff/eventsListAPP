@@ -29,7 +29,7 @@ const createEvent = createAsyncThunk<{ event: itemType }, { model: Omit<itemType
 
 })
 const updateEvent = createAsyncThunk<{ event: itemType }, { event: itemType }, ThunkError>('Event/updateEvent', (params, thunkAPI) => {
-    const {event} = params
+    const {event}=params
     thunkAPI.dispatch(commonActions.setAppStatus({status: 'loading'}))
     try {
         const res = ArrangementList.update(event)
@@ -41,10 +41,14 @@ const updateEvent = createAsyncThunk<{ event: itemType }, { event: itemType }, T
 
 })
 
+
+
 export const slice = createSlice({
     name: 'event',
     initialState: {} as itemType,
-    reducers: {},
+    reducers: {
+
+    },
     extraReducers: builder => {
         builder
             .addCase(fetchEvent.fulfilled, (state, action) => {
@@ -60,5 +64,5 @@ export const slice = createSlice({
 })
 
 export const eventThunkActions = {fetchEvent, createEvent, updateEvent}
-//export const  {changeType}= slice.actions
+
 

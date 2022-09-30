@@ -8,7 +8,7 @@ type propsType = {
     event: itemType
 }
 
-const Item = ({event}: propsType) => {
+const Item = React.memo(({event}: propsType) => {
 
     const typeEvent = useContext(DataContex).selectEventType.filter(s => s.value === event.type)[0].title
 
@@ -20,6 +20,6 @@ const Item = ({event}: propsType) => {
             <td style={{border: '1px solid black'}}>{typeEvent}</td>
         </tr>
     );
-};
+});
 
 export default Item;

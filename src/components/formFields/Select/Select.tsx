@@ -2,7 +2,7 @@ import React, {ChangeEventHandler} from 'react';
 import {fieldType, selectDataType} from "../type";
 
 
-const Select = ({values, onChangeHandler, labelName, labelFor, value}: fieldType<selectDataType>) => {
+const Select = React.memo(({values, onChangeHandler, labelName, labelFor, value}: fieldType<selectDataType>) => {
 
 
     const selectHandler: ChangeEventHandler<HTMLSelectElement> = (e) => {
@@ -17,6 +17,6 @@ const Select = ({values, onChangeHandler, labelName, labelFor, value}: fieldType
             </select>
         </>
     );
-};
+});
 
 export default Select;

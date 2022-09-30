@@ -22,7 +22,7 @@ export const Modal: React.FC<ModalType> = React.memo(({
     return (<>
             {isOpen &&
                 <div>
-                    <div onClick={backGroundClick}></div>
+                    <div onClick={backGroundClick}> </div>
                     <div style={{border: '1px solid black'}}>
                         {children}
                     </div>

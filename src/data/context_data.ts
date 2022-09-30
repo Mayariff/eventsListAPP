@@ -1,17 +1,12 @@
 import React from "react";
 
-export type  valueSelectType={
+export type  valueSelectType = {
     value: string,
     title: string
 }
 
-type dataType ={
-    selectEventType: Array<valueSelectType>,
-    selectEventStatus: Array<valueSelectType>
-}
-
-export const selectData= {
-    selectEventType:[{
+export const selectData = {
+    selectEventType: [{
         value: 'all',
         title: 'все'
     },
@@ -35,28 +30,27 @@ export const selectData= {
             value: 'other',
             title: 'другое'
         },
-        ]
+    ]
     ,
-     selectEventStatus: [
-                {
-                    value: 'planned',
-                    title: 'запланировано'
-                },
-                {
-                    value: 'in_progress',
-                    title: 'началось'
-                },
-                {
-                    value: 'happened',
-                    title: 'закончилось'
-                },
-                {
-                    value: 'cancelled',
-                    title: 'отменено'
-                },
-            ]
+    selectEventStatus: [
+        {
+            value: 'planned',
+            title: 'запланировано'
+        },
+        {
+            value: 'in_progress',
+            title: 'началось'
+        },
+        {
+            value: 'happened',
+            title: 'закончилось'
+        },
+        {
+            value: 'cancelled',
+            title: 'отменено'
+        },
+    ]
 }
 
 
-
-export  const DataContex = React.createContext(selectData)
+export const DataContex = React.createContext(selectData)
