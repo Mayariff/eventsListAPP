@@ -1,0 +1,73 @@
+@import "variables";
+
+@mixin noneBaseStyle() {
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: none;
+}
+@mixin position($position, $top, $left) {
+  position: $position;
+  top: $top;
+  left: $left;
+}
+
+@mixin sizeBlock($width, $height) {
+  width: $width;
+  height: $height;
+}
+@mixin flexStyle($dir, $jContent, $Items) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jContent;
+  align-items: $Items;
+  flex-wrap: wrap;
+  align-content: center;
+}
+
+@mixin text($color,$fontFamily,$fontSize, $fontWeight) {
+  color: $color;
+  font-family: $fontFamily;
+  font-size: $fontSize;
+  font-weight: $fontWeight;
+  font-style: normal;
+}
+
+@mixin textStroke($color, $letterSpace){
+  letter-spacing: $letterSpace;
+  text-shadow: 0   -1px 0   $color,
+  0   -1px 0   $color,
+  -0    1px 0   $color,
+  0    1px 0   $color,
+  -1px -0   0  $color,
+  1px -0   0   $color,
+  -1px  0   0  $color,
+  1px  0   0   $color,
+  -1px -1px 0  $color,
+  1px -1px 0   $color,
+  -1px  1px 0   $color,
+  1px  1px 0  $color,
+  -1px -1px 0  $color,
+  1px -1px 0   $color,
+  -1px  1px 0   $color,
+  1px  1px 0   $color;
+}
+
+@mixin horizonScroll(){
+  overflow-y: hidden;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    height: 8px;
+    background-color: $darkColor;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #18aaaa;
+  }
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    background-color: #f9f9fd;
+  }
+}

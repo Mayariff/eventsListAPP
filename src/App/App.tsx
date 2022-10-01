@@ -4,6 +4,7 @@ import {Outlet} from 'react-router-dom';
 import {appActions, appSelectors} from "../features/Application";
 import Loader from "../components/Loader/Loader";
 import {ErrorModal} from "../components/Modal";
+import s from './App.module.scss'
 
 
 function App() {
@@ -24,10 +25,12 @@ function App() {
 
     if (!isInitialized) return <Loader/>
     return (
-        <div>
-            <h1> Календарь событий</h1>
+        <div className={s.container}>
+            <div className={s.contentContainer}>
+            <h1 className={s.title}>Календарь событий</h1>
             <Outlet/>
             {error && <ErrorModal isOpen={errorModal} changeIsOpen={setErrorModal} payload={{error}}/>}
+            </div>
         </div>
     );
 }

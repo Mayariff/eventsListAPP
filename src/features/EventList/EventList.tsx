@@ -3,10 +3,11 @@ import {useAppDispatch, useAppSelector} from "../../utils/redux-utils";
 import {selectEventsList} from "./selectors";
 import {eventsListActions} from "./index";
 import SettingTable from "../SettingTable/SettingTable";
-import Item from "../../components/Item/Item";
+import TableRow from "../../components/TableRow/TableRow";
 import TableHeader from "../../components/TableHeader/TableHeader";
 import {CreateEventModal} from "../../components/Modal";
 import {paramType} from "./eventlist-reducer";
+import s from './EventList.module.scss'
 
 
 const EventList = React.memo(() => {
@@ -28,13 +29,14 @@ const EventList = React.memo(() => {
 
     return (<>
             <SettingTable onClickHandler={onClickHandler}/>
-            <table>
-                <TableHeader/>
-                <tbody>
-                {events.map((ev) => <Item event={ev} key={ev.id}/>)}
-                </tbody>
-                <caption>Таблица мероприятий</caption>
-            </table>
+            <div className={s.tableWrap}>
+                <table className={s.table}>
+                    <TableHeader/>
+                    <tbody>
+                    {events.map((ev) => <TableRow event={ev} key={ev.id}/>)}
+                    </tbody>
+                </table>
+            </div>
             <button onClick={clickBtnCreateEventHandler}>Создать</button>
             <CreateEventModal isOpen={createEventModal} changeIsOpen={setCreateEventModal} payload={undefined}/>
         </>

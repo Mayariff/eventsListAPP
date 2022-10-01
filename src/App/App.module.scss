@@ -1,0 +1,25 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.container {
+  background-color: blanchedalmond;
+  width: 100vw;
+  @include flexStyle(column, space-between, center);
+
+  .contentContainer {
+    width: 80%;
+    margin: 50px 0;
+    position: relative;
+    @include flexStyle(column, space-between, center);
+    border: 1px solid #043650;
+
+    .title {
+      @include text($secondColor, $headerFont, 2rem, 600);
+      margin-bottom: 2rem;
+    }
+
+    @media (max-width: 690px) {
+      width: 96%;
+    }
+  }
+}
