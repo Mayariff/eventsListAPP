@@ -5,7 +5,6 @@ import {Route, Routes} from "react-router-dom";
 import {ErrorPage} from "../components/ErrorPage/ErrorPage";
 import App from "../App/App";
 
-
 const Routing = () => {
     return (
         <Routes>
