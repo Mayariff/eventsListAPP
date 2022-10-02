@@ -19,6 +19,8 @@
 
 .person {
   flex-wrap: nowrap;
+  justify-content: space-between;
+  width: 94%;
   position: relative;
   @media (max-width: 601px) {
     margin-top: 10px;
@@ -26,15 +28,16 @@
   }
 
   .button {
+    @include position(absolute, 24px, 410px);
     @media (max-width: 601px) {
-      @include position(absolute, 46px, 10px)
+      @include position(absolute, 46px, 6px)
     }
     @media (max-width: 594px) {
-      top: 59px;
+      @include position(absolute, 59px, 4px)
     }
 
     @media (max-width: 479px) {
-      left: -22px;
+      left: -30px;
     }
     @media (max-width: 340px) {
       @include position(absolute, 64px, 160px);

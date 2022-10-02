@@ -7,7 +7,7 @@ import {store} from "./App/store";
 import {ArrangementList} from "./API/ArrangementList";
 import {Provider} from "react-redux";
 import Routing from "./Routing/Routing";
-import {BrowserRouter} from "react-router-dom";
+import {HashRouter} from "react-router-dom";
 import {DataContex, selectData} from './data/context_data';
 
 ArrangementList.setStartDate(data)
@@ -19,11 +19,11 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <BrowserRouter>
+            <HashRouter>
                 <DataContex.Provider value={selectData}>
-            <Routing/>
+                    <Routing/>
                 </DataContex.Provider>
-            </BrowserRouter>
+            </HashRouter>
             {/*<RouterProvider router={router}/>*/}
         </Provider>
     </React.StrictMode>
