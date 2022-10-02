@@ -1,0 +1,31 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.main {
+  .wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    height: 100vh;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .body {
+    position: relative;
+    margin: auto;
+    z-index: 11;
+    background: white;
+    padding: 30px 30px;
+    border-radius: 4px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.36);
+    .fieldError {
+      margin-top: 14px;
+      @include text($darkAccentColor, $baseFont, 1.1rem, normal);
+    }
+  }
+}

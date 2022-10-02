@@ -1,17 +1,19 @@
 import React, {ChangeEventHandler, MouseEventHandler, useCallback, useContext, useState} from 'react';
-import Select from "../formFields/Select/Select";
-import {selectDataType} from "../formFields/type";
-import TextField from "../formFields/TextField/TextField";
-import {DataContex} from "../../data/context_data";
-import {eventType, itemType, startersType, statusEventType} from "../../API/types";
-import {create_id} from "../../utils/create_id";
-import {useAppDispatch, useAppSelector} from "../../utils/redux-utils";
+import Select from '../formFields/Select/Select';
+import {selectDataType} from '../formFields/type';
+import TextField from '../formFields/TextField/TextField';
+import {DataContex} from '../../data/context_data';
+import {eventType, itemType, startersType, statusEventType} from '../../API/types';
+import {create_id} from '../../utils/create_id';
+import {useAppDispatch, useAppSelector} from '../../utils/redux-utils';
 import {updateEventForm} from "./eventForm-reducer";
-import {selectStarters, StarterItem, startersActions} from "../StarterItem";
-import {EventFieldsType} from "./index";
+import {selectStarters, StarterItem, startersActions} from '../StarterItem';
+import {EventFieldsType} from './index';
+import s from './EventFormField.module.scss'
+import Button from "../Button/Button";
 
 
-const EventFields = React.memo(({event, changeValue, error, errorHandler, isCreateModal}: EventFieldsType) => {
+const EventFields = React.memo(({event, changeValue, error, errorHandler, isCreateModal,title}: EventFieldsType) => {
     const dispatch = useAppDispatch()
     //Select values
     const selectTypeData = useContext(DataContex).selectEventType.filter(s => s.value !== 'all')
@@ -94,13 +96,17 @@ const EventFields = React.memo(({event, changeValue, error, errorHandler, isCrea
     }, [type, startDate, endDate, status, starters, description])
 
 
-    return (
-        <div onMouseLeave={onMouseLeaveHandler}>
-            <Select values={selectTypeData}
-                    onChangeHandler={selectHandler}
-                    labelName={'Тип события'}
-                    labelFor={'event_type'}
-                    value={type as selectDataType}/>
+    return (<>
+            {title &&  <h2 className={s.title}>{title}</h2>}
+        <div className={s.container} onMouseLeave={onMouseLeaveHandler}>
+            <TextField onChangeHandler={onChangeNameHandler}
+                       labelName={'Название'}
+                       labelFor={'name'}
+                       value={eventName}
+                       required={true}
+                       errorHandler={errorHandler}
+                       maxLength={45}
+            />
             <TextField labelName={'Дата начала'}
                        labelFor={'from_date'}
                        value={startDate}
@@ -116,14 +122,6 @@ const EventFields = React.memo(({event, changeValue, error, errorHandler, isCrea
                        type={'date'}
                        errorHandler={errorHandler}
             />
-            <TextField onChangeHandler={onChangeNameHandler}
-                       labelName={'Название'}
-                       labelFor={'name'}
-                       value={eventName}
-                       required={true}
-                       errorHandler={errorHandler}
-                       maxLength={45}
-            />
             <TextField onChangeHandler={onChangeDescriptionHandler}
                        labelName={'Описание'}
                        labelFor={'description'}
@@ -131,21 +129,32 @@ const EventFields = React.memo(({event, changeValue, error, errorHandler, isCrea
                        errorHandler={errorHandler}
                        maxLength={100}
             />
+            <Select values={selectTypeData}
+                    onChangeHandler={selectHandler}
+                    labelName={'Тип события'}
+                    labelFor={'event_type'}
+                    value={type as selectDataType}/>
             <Select values={selectStatusData}
                     onChangeHandler={selectStatusHandler}
                     labelName={'Статус события'}
                     labelFor={'event_status'}
                     value={status}/>
-            <label>Список участников: <input type={'button'} value={'+'} onClick={addField}/></label>
-            <label><input type={'checkbox'} checked={isPerson} onChange={changeDepartment}/> Сотрудники </label>
-
-            {starters.map((s) => <StarterItem key={s.id}
-                                              deleteStarter={deleteField}
-                                              changeStarter={changeStartersField}
-                                              isDepartment={!isPerson}
-                                              starter={s}
+            <div className={s.startersBlock}>
+            <label className={s.label}>Список участников: <input className={s.button} type={'button'} value={'+'} onClick={addField}/>
+            </label>
+            <label className={s.checkboxContainer}>
+                <span className={s.label}>Отделы</span> <input type={'checkbox'} checked={isPerson} onChange={changeDepartment} className={s.checkbox}/> <span className={s.label}>Сотрудники</span>
+            </label>
+            </div>
+                {starters.map((s) => <StarterItem key={s.id}
+                                                 deleteStarter={deleteField}
+                                                 changeStarter={changeStartersField}
+                                                 isDepartment={!isPerson}
+                                                 starter={s}
             />)}
+
         </div>
+        </>
     );
 });
 

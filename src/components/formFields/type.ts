@@ -1,6 +1,6 @@
-import {valueSelectType} from "../../data/context_data";
-import {eventType, statusEventType} from "../../API/types";
-import {DetailedHTMLProps, InputHTMLAttributes} from "react";
+import {valueSelectType} from '../../data/context_data';
+import {eventType, statusEventType} from '../../API/types';
+import {DetailedHTMLProps, InputHTMLAttributes} from 'react';
 
 
 export type fieldType<T> = {
@@ -19,5 +19,6 @@ export type selectDataType = statusEventType | eventType | 'all'
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 export type textFieldType = fieldType<string> & DefaultInputPropsType & {
-    maxLength?: number
+    maxLength?: number,
+    onEnter?: () => void
 }

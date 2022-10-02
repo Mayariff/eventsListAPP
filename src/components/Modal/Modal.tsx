@@ -1,4 +1,5 @@
-import React, {ReactElement, useCallback} from "react";
+import React, {ReactElement, useCallback} from 'react';
+import s from './Modal.module.scss'
 
 export type ReturnComponentType = Nullable<ReactElement>;
 export type Nullable<T> = T | null;
@@ -20,14 +21,11 @@ export const Modal: React.FC<ModalType> = React.memo(({
     }, [changeModal])
 
     return (<>
-            {isOpen &&
-                <div>
-                    <div onClick={backGroundClick}> </div>
-                    <div style={{border: '1px solid black'}}>
-                        {children}
-                    </div>
-                </div>
-            }
-        </>
-    )
+        {isOpen && <div className={s.main}>
+            <div className={s.body}>
+                {children}
+            </div>
+            <div className={s.wrapper} onClick={backGroundClick}></div>
+        </div>}
+    </>)
 })

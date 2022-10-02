@@ -1,6 +1,7 @@
-import React, {FocusEventHandler, useCallback, useState} from "react";
-import TextField from "../formFields/TextField/TextField";
-import {StartersListType} from "./index";
+import React, {FocusEventHandler, useCallback, useState} from 'react';
+import TextField from '../formFields/TextField/TextField';
+import {StartersListType} from './index';
+import s from './StartersItem.module.scss'
 
 
 export const StarterItem = React.memo(({
@@ -38,7 +39,7 @@ export const StarterItem = React.memo(({
 
 
     return (
-        <div>
+        <div className={isDepartment ? s.container : `${s.container} ${s.person}`}>
             {isDepartment ?
                 <TextField onChangeHandler={onChangeDepartment}
                            labelName={'Отдел'}
@@ -58,7 +59,7 @@ export const StarterItem = React.memo(({
                                onBlur={onBlurHandler}
                     />
                 </>}
-            <input type={'button'} value={'-'} onClick={closeField}/>
+            <input className={s.button} type={'button'} value={'-'} onClick={closeField}/>
         </div>
     )
 })

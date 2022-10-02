@@ -1,5 +1,6 @@
-import React, {ChangeEventHandler, FocusEventHandler} from 'react';
-import {textFieldType} from "../type";
+import React, {ChangeEventHandler, FocusEventHandler, KeyboardEventHandler} from 'react';
+import {textFieldType} from '../type';
+import s from './TextField.module.scss'
 
 
 const TextField = React.memo(({
@@ -31,16 +32,25 @@ const TextField = React.memo(({
         errorHandler && errorHandler(null)
     }
 
-    return (<>
-            <label htmlFor={labelFor}>{props.required ? `${labelName}*` : labelName} :</label>
-            <input id={labelFor}
-                   type={type ? type : 'text'}
-                   value={value.toString()} onChange={changeInputValue} {...props}
-                   onBlur={onBlurHandler} onFocus={onFocusHandler}
+    const onKeyPressCallback:KeyboardEventHandler<HTMLInputElement> = (e) => {
+        props.onKeyPress && props.onKeyPress(e);
+        props.onEnter && e.key === 'Enter' && props.onEnter()
+    }
 
+    return (<div className={s.textField}>
+            <label className={s.label} htmlFor={labelFor}>{labelName}
+                {props.required && <span className={s.required}>*</span>} :</label>
+            <input className={s.input}
+                   id={labelFor}
+                   type={type ? type : 'text'}
+                   value={value.toString()}
+                   onChange={changeInputValue} {...props}
+                   onBlur={onBlurHandler}
+                   onFocus={onFocusHandler}
+                   onKeyPress={onKeyPressCallback}
             />
-            {maxLength && <div>{value.length}/ {maxLength} </div>}
-        </>
+            <div className={s.count}>{maxLength ? `${value.length} / ${maxLength}`: ' '} </div>
+        </div>
     );
 });
 

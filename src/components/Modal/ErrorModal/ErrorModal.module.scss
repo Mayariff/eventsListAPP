@@ -1,0 +1,15 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.container {
+  width: 400px;
+  height: 200px;
+  @include flexStyle(column, space-evenly, center);
+
+  .title {
+    @include text($secondColor, $headerFont, 1.3rem, 600);
+  }
+}
+
+
+

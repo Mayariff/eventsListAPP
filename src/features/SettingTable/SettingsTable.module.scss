@@ -1,0 +1,36 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.form {
+  text-align: center;
+  outline: 3px solid $darkColor;
+  width: 100%;
+  @include flexStyle(column, space-between, center);
+
+  .fields {
+    border: none;
+    padding: 10px 10px 20px;
+    width: 70%;
+    @include flexStyle(row, space-between, start);
+    @media (max-width: 1172px) {
+      width: 100%;
+    };
+    @media (max-width: 780px) {
+      @include flexStyle(column, space-between, start);
+    };
+  }
+
+  .btnMenu {
+    border: none;
+    padding: 5px 0 20px;
+    width: 280px;
+    @include flexStyle(row, space-between, center);
+    @media (max-width: 350px) {
+      width: 100%;
+    };
+    @media (max-width: 260px) {
+      height: 110px;
+      @include flexStyle(column, space-between, center);
+    }
+  }
+}

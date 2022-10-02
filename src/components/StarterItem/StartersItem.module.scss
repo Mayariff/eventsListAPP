@@ -1,0 +1,45 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.container {
+  @include flexStyle(row, center, center);
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-bottom: -20px;
+
+  .button {
+    @include smallBtn();
+    margin-top: 13px;
+    margin-left: 10px;
+    @media (max-width: 594px) {
+      margin-top: 0;
+    }
+  }
+}
+
+.person {
+  flex-wrap: nowrap;
+  position: relative;
+  @media (max-width: 601px) {
+    margin-top: 10px;
+    @include flexStyle(column, start, flex-start);
+  }
+
+  .button {
+    @media (max-width: 601px) {
+      @include position(absolute, 46px, 10px)
+    }
+    @media (max-width: 594px) {
+      top: 59px;
+    }
+
+    @media (max-width: 479px) {
+      left: -22px;
+    }
+    @media (max-width: 340px) {
+      @include position(absolute, 64px, 160px);
+      left: 160px;
+
+    }
+  }
+}

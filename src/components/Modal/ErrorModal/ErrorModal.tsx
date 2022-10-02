@@ -1,11 +1,14 @@
 import React from 'react';
 import {modalContentType, modalType} from "../types";
 import {Modal} from "../Modal";
-import {useAppDispatch} from "../../../utils/redux-utils";
-import {commonActions} from "../../../features/common_actions/app-actions";
+import {useAppDispatch} from '../../../utils/redux-utils';
+import {commonActions} from '../../../features/common_actions/app-actions';
+import s from './ErrorModal.module.scss'
+import Button from '../../Button/Button';
 
 
 const Error = React.memo(({showAdd, payload}: modalContentType<{ error: string | null }>) => {
+
     const dispatch = useAppDispatch()
     const closeModal = () => {
         dispatch(commonActions.setAppError({error: null}))
@@ -13,9 +16,9 @@ const Error = React.memo(({showAdd, payload}: modalContentType<{ error: string |
     }
 
     return (
-        <div style={{border: '1px solid black'}}>
-            {payload.error}
-            <button onClick={closeModal}> OK</button>
+        <div className={s.container}>
+            <div className={s.title}>{payload.error}</div>
+            <Button btnName={'OK'} onClick={closeModal} color={'second'}/>
         </div>
     );
 });

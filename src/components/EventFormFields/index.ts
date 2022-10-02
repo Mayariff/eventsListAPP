@@ -18,6 +18,7 @@ export type EventFieldsType = {
     error?: string | null
     errorHandler?: (error: string | null) => void
     isCreateModal?:boolean
+    title?:string
 }
 const selectEventFormFields= (state: AppRootStateType) => state.eventForm
 

@@ -1,12 +1,14 @@
 import React, {MouseEventHandler, useCallback, useState} from 'react';
-import {itemType} from "../../../API/types";
-import {useAppDispatch, useAppSelector} from "../../../utils/redux-utils";
-import {eventActions} from "../../../features/Event";
-import {eventsListActions} from "../../../features/EventList";
-import {Modal} from "../Modal";
-import {modalContentType, modalType} from "../types";
-import {selectStarters} from "../../StarterItem";
-import {EventFields, eventFieldType, selectEventFormFields} from "../../EventFormFields";
+import {itemType} from '../../../API/types';
+import {useAppDispatch, useAppSelector} from '../../../utils/redux-utils';
+import {eventActions} from '../../../features/Event';
+import {eventsListActions} from '../../../features/EventList';
+import {Modal} from '../Modal';
+import {modalContentType, modalType} from '../types';
+import {selectStarters} from '../../StarterItem';
+import {EventFields, eventFieldType, selectEventFormFields} from '../../EventFormFields';
+import Button from '../../Button/Button';
+import s from '../Modal.module.scss';
 
 
 const CreateEvent = React.memo(({showAdd}: modalContentType<undefined>) => {
@@ -29,7 +31,7 @@ const CreateEvent = React.memo(({showAdd}: modalContentType<undefined>) => {
         if (event?.endDate && event.startDate > event?.endDate) {
             setFieldError('Дата начала события должна  быть раньше его конца')
         } else if (event.eventName?.length === 0) {
-            setFieldError('заполните обязательные поля')
+            setFieldError('Заполните обязательные поля')
         } else {
             dispatch(eventActions.createEvent({model: {...eventValue, ...event, startersList: starters}}))
             showAdd(false)
@@ -41,9 +43,9 @@ const CreateEvent = React.memo(({showAdd}: modalContentType<undefined>) => {
     return (
         <form>
             <EventFields event={eventValue} changeValue={onChangeHandler} error={fieldError}
-                         errorHandler={setFieldError} isCreateModal={true}/>
-            <button type={'submit'} onClick={createEvent} disabled={!!fieldError}>создать</button>
-            {fieldError && <span>{fieldError}</span>}
+                         errorHandler={setFieldError} isCreateModal={true} title={'Новое событие'}/>
+            <Button type={'submit'} onClick={createEvent} disabled={!!fieldError} btnName={'Cоздать'}/>
+            {fieldError && <div className={s.fieldError}>{fieldError}</div>}
         </form>
     );
 });

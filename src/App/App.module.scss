@@ -4,14 +4,15 @@
 .container {
   background-color: blanchedalmond;
   width: 100vw;
-  @include flexStyle(column, space-between, center);
+  height: 100vh;
+  @include flexStyle(column, space-between, flex-start);
+  position: relative;
 
   .contentContainer {
+    position: relative;
     width: 80%;
     margin: 50px 0;
-    position: relative;
     @include flexStyle(column, space-between, center);
-    border: 1px solid #043650;
 
     .title {
       @include text($secondColor, $headerFont, 2rem, 600);

@@ -1,0 +1,28 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.container {
+  @include flexStyle(column, center, flex-start);
+  .label {
+    @include text($secondColor, $baseFont, 1rem, normal);
+    margin: 12px 0 0 6px;
+  }
+
+  .select {
+    width: 200px;
+    padding: 10px;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    &:focus {
+      outline: 1px solid rgba(0, 0, 0, 0.2) !important;
+    }
+    &[multiple] {
+      padding-right: 0;
+    }
+  }
+  @media (max-width: 600px) {
+    margin-top:10px;
+  }
+}

@@ -1,0 +1,86 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.title {
+  @include text($secondColor, $headerFont, 1.3rem, 600);
+}
+
+.container {
+  @include flexStyle(row, space-between, center);
+  width: 440px;
+  margin-bottom: 20px;
+
+  .startersBlock {
+    @include flexStyle(row, space-between, center);
+    flex-wrap: nowrap;
+    width: 100%;
+    margin-top: 20px;
+
+    .label {
+      @include text($secondColor, $baseFont, 1rem, normal);
+    }
+
+    .button {
+      @include smallBtn();
+    }
+
+    .checkbox {
+      margin: 0 10px;
+      appearance: none;
+      @include sizeBlock(40px, 16px);
+      border: 1px solid #aaa;
+      border-radius: 2px;
+      background: #ebebeb;
+      position: relative;
+      top: -2px;
+      display: inline-block;
+      overflow: hidden;
+      vertical-align: middle;
+      transition: background 0.3s;
+      box-sizing: border-box;
+
+      &:after {
+        content: '';
+        @include position(absolute, -1px, -1px);
+        @include sizeBlock(14px, 14px);
+        background: white;
+        border: 1px solid #aaa;
+        border-radius: 2px;
+        transition: left 0.1s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+      }
+
+      &:checked {
+        background: $btnColor;
+        border-color: #0185bb;
+
+        &:after {
+          left: 23px;
+          border-color: #8daee5;
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      @include flexStyle(column, center, flex-start);
+    }
+  }
+
+  .checkboxContainer {
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    @include flexStyle(column, center, center);
+    width: 320px;
+  }
+  @media (max-width: 480px) {
+    width: 240px;
+  }
+  @media (max-width: 340px) {
+    width: 200px;
+  }
+  @media (max-width: 280px) {
+    width: 180px;
+  }
+
+}

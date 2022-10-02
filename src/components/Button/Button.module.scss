@@ -1,0 +1,50 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.default {
+  @include sizeBlock(120px, 40px);
+  @include text($textColor, $headerFont,1rem, normal);
+  border-radius: 3px;
+  padding: 4px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  @include volumeBtnEffect();
+  outline: none;
+  border: none;
+  z-index: 1;
+}
+.active{
+  background: $btnColor;
+  &:after {
+    content: "";
+    @include position(absolute, 0, 0);
+    @include sizeBlock(0, 100%);
+    z-index: -1;
+    background-color: $colorStroke;
+    border-radius: 3px;
+    @include volumeBtnEffect()
+  }
+  &:hover {
+    color: #fff;
+    &:after {
+      left: 0;
+      width: 100%;
+    }
+  }
+  &:active {
+    top: 2px;
+  }
+}
+.red{
+  background: $accentColor;
+  &:after {
+    background-color: $darkAccentColor;
+  }
+}
+.disabled{
+  background-color: #c4d0da;
+  box-shadow:inset 2px 2px 2px 0 rgba(255, 255, 255, .5);
+}
+

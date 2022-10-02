@@ -1,0 +1,40 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.textField {
+  @include flexStyle(column, center, flex-start);
+
+  .label {
+    @include text($secondColor, $baseFont, 1rem, normal);
+    margin: 12px 0 0 6px;
+    @media (max-width: 600px) {
+      margin: 0;
+    }
+    .required {
+      @include position(relative, 6px, 2px);
+      @include text($darkAccentColor, $baseFont, 1.3rem, bold);
+    }
+  }
+
+  .input {
+    width: 200px;
+    padding: 10px;
+    border: 0;
+    border-radius: 2px;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    &:focus {
+      outline: 1px solid rgba(0, 0, 0, 0.2) !important;
+    } ;
+    .errorInput {
+      box-shadow: 0 0 8px 4px $darkAccentColor;
+      background: rgba(255, 9, 34, 0.1);
+    }
+  }
+
+  .count {
+    @include text($secondColor, $baseFont, .7rem, normal);
+    height: 20px;
+    padding-top: 4px;
+  }
+}

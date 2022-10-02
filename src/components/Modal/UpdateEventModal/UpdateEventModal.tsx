@@ -1,11 +1,13 @@
-import {itemType} from "../../../API/types";
-import {useAppDispatch, useAppSelector} from "../../../utils/redux-utils";
-import React, {MouseEventHandler, useState} from "react";
-import {eventActions} from "../../../features/Event";
-import {modalContentType, modalType} from "../types";
-import {Modal} from "../Modal";
-import {selectStarters} from "../../StarterItem";
-import {EventFields, eventFieldType, selectEventFormFields} from "../../EventFormFields";
+import {itemType} from '../../../API/types';
+import {useAppDispatch, useAppSelector} from '../../../utils/redux-utils';
+import React, {MouseEventHandler, useState} from 'react';
+import {eventActions} from '../../../features/Event';
+import {modalContentType, modalType} from '../types';
+import {Modal} from '../Modal';
+import {selectStarters} from '../../StarterItem';
+import {EventFields, eventFieldType, selectEventFormFields} from '../../EventFormFields';
+import s from '../Modal.module.scss';
+import Button from "../../Button/Button";
 
 const _UpdateEvent = React.memo(({showAdd, payload}: modalContentType<{ event: itemType }>) => {
     const id = payload.event.id
@@ -44,9 +46,9 @@ const _UpdateEvent = React.memo(({showAdd, payload}: modalContentType<{ event: i
     return (
         <form>
             <EventFields event={eventValue} changeValue={onChangeHandler} error={fieldError}
-                         errorHandler={setFieldError}/>
-            <button type={'submit'} onClick={updateEvent} disabled={!!fieldError}>Изменить</button>
-            {fieldError && <span>{fieldError}</span>}
+                         errorHandler={setFieldError} title={'Изменить событие'}/>
+            <Button type={'submit'} onClick={updateEvent} disabled={!!fieldError} btnName={'Изменить'}/>
+            {fieldError && <div className={s.fieldError}>{fieldError}</div>}
         </form>
     );
 });

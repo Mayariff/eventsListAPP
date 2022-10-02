@@ -1,0 +1,68 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.container {
+  @include flexStyle(column, flex-start, center);
+
+  .buttonBack {
+    @include smallBtn();
+    @include sizeBlock(40px, 40px);
+    border-width: 3px;
+    @include position(absolute, 5px,0);
+    &:after {
+      @include arrow(12px, 12px, 5px, $colorStroke, 45deg, 6px, 6px);
+    }
+  }
+
+  .buttonContainer {
+    width: 300px;
+    @include flexStyle(row, space-between, center);
+    @media (max-width: 316px) {
+      height: 120px;
+      @include flexStyle(column, space-around, center);
+    }
+  }
+
+  .eventContainer {
+    text-align: center;
+    margin: 30px 0;
+    outline: 3px solid $darkColor;
+    width: 100%;
+    border: 5px solid $textColor;
+    background-color: $lightColor;
+    font-size: 1rem;
+
+    .firstHeader {
+      margin-top: 10px;
+      @include text($textColor, $headerFont, 2rem, normal);
+      @include textStroke($colorStroke, 0.09em);
+      @media (max-width: 992px) {
+        font-size: 1.8rem;
+      }
+    }
+
+    .contentBlock {
+      margin: 20px 20px 40px;
+      @include flexStyle(column, flex-start, flex-start);
+
+      .item {
+        width: 100%;
+        padding-bottom: 8px;
+
+        .categoryHeader {
+          @include text($colorStroke, $headerFont, 1rem, bold);
+          width: 200px;
+          padding-right: 20px;
+          text-align: left;
+        }
+
+        .categoryValue {
+          @include text($colorStroke, $baseFont, 1rem, normal);
+          padding: 6px 4px;
+          text-align: left;
+          border: 1px solid $textColor;
+        }
+      }
+    }
+  }
+}

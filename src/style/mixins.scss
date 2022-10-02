@@ -71,3 +71,37 @@
     background-color: #f9f9fd;
   }
 }
+
+@mixin volumeBtnEffect(){
+  box-shadow:inset 2px 2px 2px 0 rgba(255,255,255,.5),
+  7px 7px 20px 0 rgba(0,0,0,.1),
+  4px 4px 5px 0 rgba(0,0,0,.1);
+  transition: all 0.3s ease;
+}
+
+@mixin smallBtn(){
+  display: inline-block;
+  @include sizeBlock(30px, 30px);
+  border: 2px solid $darkColor;
+  border-radius: 3px;
+  background-color: transparent;
+  cursor: pointer;
+  @include text($secondColor, $headerFont, 1rem, bold);
+  &:active{
+    background-color: $darkColor;
+    transform: scale(0.8);
+  }
+}
+
+@mixin arrow($width, $height, $widthBorder, $color, $rotate,  $top,$right) {
+  content: '';
+  position: absolute;
+  width: $width;
+  height: $height;
+  border-left: $widthBorder solid $color;
+  border-bottom: $widthBorder solid $color;
+  transform: rotate($rotate);
+  z-index: 9;
+  top: $top;
+  right: $right;
+}

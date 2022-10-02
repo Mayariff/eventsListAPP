@@ -1,0 +1,49 @@
+@import 'src/style/mixins';
+@import 'src/style/variables';
+
+.container {
+  background-color: blanchedalmond;
+  width: 100vw;
+  height: 100vh;
+
+  .title {
+    @include text($darkAccentColor, $headerFont, 10rem, bold);
+    margin: 4rem 5px 0;
+    @media (max-width: 453px) {
+      font-size: 6rem;
+      margin-top: 0;
+    }
+    @media (max-width: 286px) {
+      font-size: 4rem;
+      margin-top: 0;
+    }
+  }
+
+  .text {
+    @include text($secondColor, $headerFont, 2rem, 600);
+    margin-bottom: 2rem;
+    @media (max-width: 453px) {
+      font-size: 1.4rem;
+      margin-top: 0;
+    }
+  }
+
+  .buttonBack {
+    @include smallBtn();
+    @include sizeBlock(40px, 40px);
+    border-width: 3px;
+    @include position(absolute, 5px, 0);
+
+    &:after {
+      @include arrow(12px, 12px, 5px, $colorStroke, 45deg, 6px, 6px);
+    }
+
+    @media (max-width: 425px) {
+      top: 50px;
+    }
+    @media (max-width: 260px) {
+      top: 94px;
+    }
+  }
+
+}

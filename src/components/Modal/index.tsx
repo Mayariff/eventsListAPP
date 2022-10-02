@@ -4,4 +4,4 @@ import UpdateEventModal from "./UpdateEventModal/UpdateEventModal";
 import ErrorModal from "./ErrorModal/ErrorModal";
 import {Modal} from "./Modal";
 
-export {DeleteEventModal, CreateEventModal, UpdateEventModal, Modal, ErrorModal}
+export {DeleteEventModal, CreateEventModal, UpdateEventModal, Modal,ErrorModal}
